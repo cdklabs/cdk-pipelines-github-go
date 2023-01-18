@@ -1,0 +1,12 @@
+// GitHub Workflows support for CDK Pipelines
+package cdkpipelinesgithub
+
+
+// Pull request review options.
+// Experimental.
+type PullRequestReviewOptions struct {
+	// Which activity types to trigger on.
+	// Experimental.
+	Types *[]*string `field:"optional" json:"types" yaml:"types"`
+}
+
