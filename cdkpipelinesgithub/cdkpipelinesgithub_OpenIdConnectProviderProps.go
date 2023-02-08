@@ -12,5 +12,8 @@ type OpenIdConnectProviderProps struct {
 	// you can utilize the `GitHubActionRole` construct to create a role for you.
 	// Experimental.
 	GitHubActionRoleArn *string `field:"required" json:"gitHubActionRoleArn" yaml:"gitHubActionRoleArn"`
+	// The role session name to use when assuming the role.
+	// Experimental.
+	RoleSessionName *string `field:"optional" json:"roleSessionName" yaml:"roleSessionName"`
 }
 
