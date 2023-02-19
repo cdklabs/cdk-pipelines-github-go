@@ -62,28 +62,31 @@ called `MyStage` that includes CDK stacks for your app and you want to deploy it
 to two AWS environments (`BETA_ENV` and `PROD_ENV`):
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  awsCreds: AwsCredentials.fromOpenIdConnect({
-    gitHubActionRoleArn: 'arn:aws:iam::<account-id>:role/GitHubActionRole',
-  }),
-});
+app := awscdk.NewApp()
 
-pipeline.addStage(new MyStage(app, 'Beta', { env: BETA_ENV }));
-pipeline.addStage(new MyStage(app, 'Prod', { env: PROD_ENV }));
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
+	}),
+})
 
-app.synth();
+pipeline.AddStage(NewMyStage(app, jsii.String("Beta"), &StageProps{
+	Env: *bETA_ENV,
+}))
+pipeline.AddStage(NewMyStage(app, jsii.String("Prod"), &StageProps{
+	Env: *pROD_ENV,
+}))
+
+app.Synth()
 ```
 
 When you run `cdk synth`, a `deploy.yml` workflow will be created under
@@ -150,24 +153,23 @@ credentials as GitHub Secrets. With OIDC, you provide a pre-provisioned IAM
 role with optional role session name to your GitHub Workflow via the `awsCreds.fromOpenIdConnect` API:
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  awsCreds: AwsCredentials.fromOpenIdConnect({
-    gitHubActionRoleArn: 'arn:aws:iam::<account-id>:role/GitHubActionRole',
-    roleSessionName: 'optional-role-session-name',
-  }),
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
+		RoleSessionName: jsii.String("optional-role-session-name"),
+	}),
+})
 ```
 
 There are two ways to create this IAM role:
@@ -186,22 +188,25 @@ To utilize this construct, create a separate CDK stack with the following code
 and `cdk deploy`:
 
 ```go
-import { GitHubActionRole } from 'cdk-pipelines-github';
-import { App, Construct, Stack, StackProps } from 'aws-cdk-lib';
-
-class MyGitHubActionRole extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
-
-    const provider = new GitHubActionRole(this, 'github-action-role', {
-      repoString: 'myUser/myRepo',
-    };
-  }
+type myGitHubActionRole struct {
+	stack
 }
 
-const app = new App();
-new MyGitHubActionRole(app, 'MyGitHubActionRole');
-app.synth();
+func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+	this := &myGitHubActionRole{}
+	newStack_Override(this, scope, id, props)
+
+	provider := src.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
+		Repos: []*string{
+			jsii.String("myUser/myRepo"),
+		},
+	})
+	return this
+}
+
+app := awscdk.NewApp()
+NewMyGitHubActionRole(app, jsii.String("MyGitHubActionRole"))
+app.Synth()
 ```
 
 Note: If you have previously created the GitHub identity provider with url
@@ -213,15 +218,21 @@ construct via the `provider` property.
 > Make sure the audience for the provider is `sts.amazonaws.com` in this case.
 
 ```go
-class MyGitHubActionRole extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+type myGitHubActionRole struct {
+	stack
+}
 
-    const provider = new GitHubActionRole(this, 'github-action-role', {
-      repos: ['myUser/myRepo'],
-      provider: GitHubActionRole.existingGitHubActionsProvider(this),
-    });
-  }
+func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+	this := &myGitHubActionRole{}
+	newStack_Override(this, scope, id, props)
+
+	provider := src.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
+		Repos: []*string{
+			jsii.String("myUser/myRepo"),
+		},
+		Provider: *src.GitHubActionRole_ExistingGitHubActionsProvider(this),
+	})
+	return this
 }
 ```
 
@@ -234,24 +245,24 @@ GitHub repository to include secrets with AWS credentials under
 by supplying the `awsCreds.fromGitHubSecrets` API to the workflow:
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  awsCreds: AwsCredentials.fromGitHubSecrets({
-    accessKeyId: 'MY_ID', // GitHub will look for the access key id under the secret `MY_ID`
-    secretAccessKey: 'MY_KEY', // GitHub will look for the secret access key under the secret `MY_KEY`
-  }),
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	AwsCreds: *src.AwsCredentials_FromGitHubSecrets(&GitHubSecretsProviderProps{
+		AccessKeyId: jsii.String("MY_ID"),
+		 // GitHub will look for the access key id under the secret `MY_ID`
+		SecretAccessKey: jsii.String("MY_KEY"),
+	}),
+})
 ```
 
 ### Runners with Preconfigured Credentials
@@ -260,21 +271,20 @@ If your runners provide credentials themselves, you can configure `awsCreds` to
 skip passing credentials:
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  awsCreds: AwsCredentials.runnerHasPreconfiguredCreds(), // NO credentials will be provided.
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	AwsCreds: *src.AwsCredentials_RunnerHasPreconfiguredCreds(),
+})
 ```
 
 ### Using Docker in the Pipeline
@@ -295,37 +305,31 @@ due to being in a different environment (e.g., ECR repo) or to avoid throttling
 (e.g., DockerHub).
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  dockerCredentials: [
-    // Authenticate to ECR
-    DockerCredential.ecr('<account-id>.dkr.ecr.<aws-region>.amazonaws.com'),
+app := awscdk.NewApp()
 
-    // Authenticate to DockerHub
-    DockerCredential.dockerHub({
-      // These properties are defaults; feel free to omit
-      usernameKey: 'DOCKERHUB_USERNAME',
-      personalAccessTokenKey: 'DOCKERHUB_TOKEN',
-    }),
-
-    // Authenticate to Custom Registries
-    DockerCredential.customRegistry('custom-registry', {
-      usernameKey: 'CUSTOM_USERNAME',
-      passwordKey: 'CUSTOM_PASSWORD',
-    }),
-  ],
-});
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	DockerCredentials: []dockerCredential{
+		*src.DockerCredential_Ecr(jsii.String("<account-id>.dkr.ecr.<aws-region>.amazonaws.com")),
+		*src.DockerCredential_DockerHub(&DockerHubCredentialSecrets{
+			// These properties are defaults; feel free to omit
+			UsernameKey: jsii.String("DOCKERHUB_USERNAME"),
+			PersonalAccessTokenKey: jsii.String("DOCKERHUB_TOKEN"),
+		}),
+		*src.DockerCredential_CustomRegistry(jsii.String("custom-registry"), &ExternalDockerCredentialSecrets{
+			UsernameKey: jsii.String("CUSTOM_USERNAME"),
+			PasswordKey: jsii.String("CUSTOM_PASSWORD"),
+		}),
+	},
+})
 ```
 
 ## Runner Types
@@ -337,21 +341,20 @@ You can choose to run the workflow in either a GitHub hosted or [self-hosted](ht
 The default is `Runner.UBUNTU_LATEST`. You can override this as shown below:
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  runner: Runner.WINDOWS_LATEST,
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	Runner: *src.Runner_WINDOWS_LATEST(),
+})
 ```
 
 ### Self Hosted Runner
@@ -359,21 +362,23 @@ const pipeline = new GitHubWorkflow(app, 'Pipeline', {
 The following example shows how to configure the workflow to run on a self-hosted runner. Note that you do not need to pass in `self-hosted` explicitly as a label.
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  runner: Runner.selfHosted(['label1', 'label2']),
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	Runner: *src.Runner_SelfHosted([]*string{
+		jsii.String("label1"),
+		jsii.String("label2"),
+	}),
+})
 ```
 
 ## Escape Hatches
@@ -381,26 +386,26 @@ const pipeline = new GitHubWorkflow(app, 'Pipeline', {
 You can override the `deploy.yml` workflow file post-synthesis however you like.
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow, JsonPatch } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-});
+app := awscdk.NewApp()
 
-const deployWorkflow = pipeline.workflowFile;
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+})
+
+deployWorkflow := pipeline.WorkflowFile
 // add `on: workflow_call: {}` to deploy.yml
-deployWorkflow.patch(JsonPatch.add('/on/workflow_call', {}));
+deployWorkflow.Patch(src.JsonPatch_Add(jsii.String("/on/workflow_call"), map[string]interface{}{
+}))
 // remove `on: workflow_dispatch` from deploy.yml
-deployWorkflow.patch(JsonPatch.remove('/on/workflow_dispatch'));
+deployWorkflow.Patch(src.JsonPatch_Remove(jsii.String("/on/workflow_dispatch")))
 ```
 
 ## Additional Features
@@ -417,47 +422,46 @@ The `jobSteps` array is placed into the pipeline job at the relevant `jobs.<job_
 In this example,
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow, JsonPatch } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-});
+app := awscdk.NewApp()
+
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+})
 
 // "Beta" stage with a pre-check that uses code from the repo and an action
-const stage = new MyStage(app, 'Beta', { env: BETA_ENV });
-pipeline.addStage(stage, {
-  pre: [new GitHubActionStep('PreBetaDeployAction', {
-    jobSteps: [
-      {
-        name: 'Checkout',
-        uses: 'actions/checkout@v3',
-      },
-      {
-        name: 'pre beta-deploy action',
-        uses: 'my-pre-deploy-action@1.0.0',
-        with: {
-          'app-id': 1234,
-          'secrets': 'my-secrets',
-        },
-      },
-      {
-        name: 'pre beta-deploy check',
-        run: 'npm run preDeployCheck',
-      },
-    ],
-  })],
-});
+stage := NewMyStage(app, jsii.String("Beta"), &StageProps{
+	Env: *bETA_ENV,
+})
+pipeline.AddStage(stage, &AddStageOpts{
+	Pre: []step{
+		*src.NewGitHubActionStep(jsii.String("PreBetaDeployAction"), &GitHubActionStepProps{
+			JobSteps: []jobStep{
+				&jobStep{
+					Name: jsii.String("Checkout"),
+					Uses: jsii.String("actions/checkout@v3"),
+				},
+				&jobStep{
+					Name: jsii.String("pre beta-deploy action"),
+					Uses: jsii.String("my-pre-deploy-action@1.0.0"),
+				},
+				&jobStep{
+					Name: jsii.String("pre beta-deploy check"),
+					Run: jsii.String("npm run preDeployCheck"),
+				},
+			},
+		}),
+	},
+})
 
-app.synth();
+app.Synth()
 ```
 
 ### Configure GitHub Environment
@@ -475,34 +479,35 @@ to two AWS environments (`BETA_ENV` and `PROD_ENV`) as well as GitHub Environmen
 `beta` and `prod`:
 
 ```go
-import { App } from 'aws-cdk-lib';
-import { ShellStep } from 'aws-cdk-lib/pipelines';
-import { GitHubWorkflow } from 'cdk-pipelines-github';
+import "github.com/aws/aws-cdk-go/awscdk"
 
-const app = new App();
 
-const pipeline = new GitHubWorkflow(app, 'Pipeline', {
-  synth: new ShellStep('Build', {
-    commands: [
-      'yarn install',
-      'yarn build',
-    ],
-  }),
-  awsCreds: AwsCredentials.fromOpenIdConnect({
-    gitHubActionRoleArn: 'arn:aws:iam::<account-id>:role/GitHubActionRole',
-  }),
-});
+app := awscdk.NewApp()
 
-pipeline.addStageWithGitHubOptions(new MyStage(this, 'Beta', {
-  env: BETA_ENV,
-  gitHubEnvironment: 'beta',
-}));
-pipeline.addStageWithGitHubOptions(new MyStage(this, 'Prod', {
-  env: PROD_ENV,
-  gitHubEnvironment: 'prod',
-}));
+pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
+	}),
+})
 
-app.synth();
+pipeline.AddStageWithGitHubOptions(awscdk.NewStage(this, jsii.String("Beta"), &StageProps{
+	Env: *bETA_ENV,
+}), &AddGitHubStageOptions{
+	GitHubEnvironment: jsii.String("beta"),
+})
+pipeline.AddStageWithGitHubOptions(NewMyStage(this, jsii.String("Prod"), &StageProps{
+	Env: *pROD_ENV,
+}), &AddGitHubStageOptions{
+	GitHubEnvironment: jsii.String("prod"),
+})
+
+app.Synth()
 ```
 
 #### Manual Approval Step
@@ -523,8 +528,8 @@ An "AUTOMATICALLY GENERATED FILE..." comment will by default be added to the top
 of the pipeline YAML. This can be overriden as desired to add additional context
 to the pipeline YAML.
 
-```go
-const pipeline = new GitHubWorkflow(/* ... */);
+```
+declare const pipeline: GitHubWorkflow;
 
 pipeline.workflowFile.commentAtTop = `AUTOGENERATED FILE, DO NOT EDIT DIRECTLY!
 
@@ -608,13 +613,17 @@ synthesized against.
 > It is for example purposes only and is not something you should do in your app.
 >
 > ```go
-> const pipeline = new GitHubWorkflow(new App(), 'Pipeline', {
->   synth: new ShellStep('Build', {
->     commands: ['echo "nothing to do (cdk.out is committed)"'],
->   }),
->   // only the example app should do this. your app should synth in the synth step.
->   preSynthed: true,
-> });
+> import "github.com/aws/aws-cdk-go/awscdk"
+>
+> pipeline := src.NewGitHubWorkflow(awscdk.NewApp(), jsii.String("Pipeline"), &GitHubWorkflowProps{
+> 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+> 		Commands: []*string{
+> 			jsii.String("echo \"nothing to do (cdk.out is committed)\""),
+> 		},
+> 	}),
+> 	// only the example app should do this. your app should synth in the synth step.
+> 	PreSynthed: jsii.Boolean(true),
+> })
 > ```
 
 ## Not supported yet

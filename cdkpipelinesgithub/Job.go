@@ -22,7 +22,9 @@ type Job struct {
 	// GitHub-hosted runner or a self-hosted runner.
 	//
 	// Example:
-	//   ["ubuntu-latest"]
+	//   []*string{
+	//   	"ubuntu-latest",
+	//   }
 	//
 	// Experimental.
 	RunsOn interface{} `field:"required" json:"runsOn" yaml:"runsOn"`
