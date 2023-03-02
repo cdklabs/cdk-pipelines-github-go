@@ -5,6 +5,10 @@ package cdkpipelinesgithub
 
 // Building without runtime type checking enabled, so all the below just return nil
 
+func (g *jsiiProxy_GitHubWorkflow) validateAddGitHubWaveParameters(id *string, options *pipelines.WaveOptions) error {
+	return nil
+}
+
 func (g *jsiiProxy_GitHubWorkflow) validateAddStageParameters(stage awscdk.Stage, options *pipelines.AddStageOpts) error {
 	return nil
 }

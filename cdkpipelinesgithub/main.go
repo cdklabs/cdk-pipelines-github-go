@@ -140,13 +140,63 @@ func init() {
 		reflect.TypeOf((*GitHubActionStepProps)(nil)).Elem(),
 	)
 	_jsii_.RegisterStruct(
+		"cdk-pipelines-github.GitHubCommonProps",
+		reflect.TypeOf((*GitHubCommonProps)(nil)).Elem(),
+	)
+	_jsii_.RegisterStruct(
 		"cdk-pipelines-github.GitHubSecretsProviderProps",
 		reflect.TypeOf((*GitHubSecretsProviderProps)(nil)).Elem(),
+	)
+	_jsii_.RegisterClass(
+		"cdk-pipelines-github.GitHubStage",
+		reflect.TypeOf((*GitHubStage)(nil)).Elem(),
+		[]_jsii_.Member{
+			_jsii_.MemberProperty{JsiiProperty: "account", GoGetter: "Account"},
+			_jsii_.MemberProperty{JsiiProperty: "artifactId", GoGetter: "ArtifactId"},
+			_jsii_.MemberProperty{JsiiProperty: "assetOutdir", GoGetter: "AssetOutdir"},
+			_jsii_.MemberProperty{JsiiProperty: "node", GoGetter: "Node"},
+			_jsii_.MemberProperty{JsiiProperty: "outdir", GoGetter: "Outdir"},
+			_jsii_.MemberProperty{JsiiProperty: "parentStage", GoGetter: "ParentStage"},
+			_jsii_.MemberProperty{JsiiProperty: "props", GoGetter: "Props"},
+			_jsii_.MemberProperty{JsiiProperty: "region", GoGetter: "Region"},
+			_jsii_.MemberProperty{JsiiProperty: "stageName", GoGetter: "StageName"},
+			_jsii_.MemberMethod{JsiiMethod: "synth", GoMethod: "Synth"},
+			_jsii_.MemberMethod{JsiiMethod: "toString", GoMethod: "ToString"},
+		},
+		func() interface{} {
+			j := jsiiProxy_GitHubStage{}
+			_jsii_.InitJsiiProxy(&j.Type__awscdkStage)
+			return &j
+		},
+	)
+	_jsii_.RegisterStruct(
+		"cdk-pipelines-github.GitHubStageProps",
+		reflect.TypeOf((*GitHubStageProps)(nil)).Elem(),
+	)
+	_jsii_.RegisterClass(
+		"cdk-pipelines-github.GitHubWave",
+		reflect.TypeOf((*GitHubWave)(nil)).Elem(),
+		[]_jsii_.Member{
+			_jsii_.MemberMethod{JsiiMethod: "addPost", GoMethod: "AddPost"},
+			_jsii_.MemberMethod{JsiiMethod: "addPre", GoMethod: "AddPre"},
+			_jsii_.MemberMethod{JsiiMethod: "addStage", GoMethod: "AddStage"},
+			_jsii_.MemberMethod{JsiiMethod: "addStageWithGitHubOptions", GoMethod: "AddStageWithGitHubOptions"},
+			_jsii_.MemberProperty{JsiiProperty: "id", GoGetter: "Id"},
+			_jsii_.MemberProperty{JsiiProperty: "post", GoGetter: "Post"},
+			_jsii_.MemberProperty{JsiiProperty: "pre", GoGetter: "Pre"},
+			_jsii_.MemberProperty{JsiiProperty: "stages", GoGetter: "Stages"},
+		},
+		func() interface{} {
+			j := jsiiProxy_GitHubWave{}
+			_jsii_.InitJsiiProxy(&j.Type__pipelinesWave)
+			return &j
+		},
 	)
 	_jsii_.RegisterClass(
 		"cdk-pipelines-github.GitHubWorkflow",
 		reflect.TypeOf((*GitHubWorkflow)(nil)).Elem(),
 		[]_jsii_.Member{
+			_jsii_.MemberMethod{JsiiMethod: "addGitHubWave", GoMethod: "AddGitHubWave"},
 			_jsii_.MemberMethod{JsiiMethod: "addStage", GoMethod: "AddStage"},
 			_jsii_.MemberMethod{JsiiMethod: "addStageWithGitHubOptions", GoMethod: "AddStageWithGitHubOptions"},
 			_jsii_.MemberMethod{JsiiMethod: "addWave", GoMethod: "AddWave"},

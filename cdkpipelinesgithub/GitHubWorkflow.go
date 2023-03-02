@@ -35,6 +35,8 @@ type GitHubWorkflow interface {
 	WorkflowName() *string
 	// Experimental.
 	WorkflowPath() *string
+	// Experimental.
+	AddGitHubWave(id *string, options *pipelines.WaveOptions) GitHubWave
 	// Deploy a single Stage by itself.
 	//
 	// Add a Stage to the pipeline, to be deployed in sequence with other
@@ -55,11 +57,11 @@ type GitHubWorkflow interface {
 	// Example:
 	//
 	// ```ts
-	// declare const pipeline: pipelines.CodePipeline;
+	// declare const pipeline: GitHubWorkflow; // assign pipeline a value
 	//
 	// const wave = pipeline.addWave('MyWave');
-	// wave.addStage(new MyApplicationStage(this, 'Stage1'));
-	// wave.addStage(new MyApplicationStage(this, 'Stage2'));
+	// wave.addStage(new MyStage(this, 'Stage1'));
+	// wave.addStage(new MyStage(this, 'Stage2'));
 	// ```.
 	// Experimental.
 	AddWave(id *string, options *pipelines.WaveOptions) pipelines.Wave
@@ -197,6 +199,22 @@ func GitHubWorkflow_IsConstruct(x interface{}) *bool {
 		"cdk-pipelines-github.GitHubWorkflow",
 		"isConstruct",
 		[]interface{}{x},
+		&returns,
+	)
+
+	return returns
+}
+
+func (g *jsiiProxy_GitHubWorkflow) AddGitHubWave(id *string, options *pipelines.WaveOptions) GitHubWave {
+	if err := g.validateAddGitHubWaveParameters(id, options); err != nil {
+		panic(err)
+	}
+	var returns GitHubWave
+
+	_jsii_.Invoke(
+		g,
+		"addGitHubWave",
+		[]interface{}{id, options},
 		&returns,
 	)
 
