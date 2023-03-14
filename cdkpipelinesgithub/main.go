@@ -144,6 +144,10 @@ func init() {
 		reflect.TypeOf((*GitHubCommonProps)(nil)).Elem(),
 	)
 	_jsii_.RegisterStruct(
+		"cdk-pipelines-github.GitHubEnvironment",
+		reflect.TypeOf((*GitHubEnvironment)(nil)).Elem(),
+	)
+	_jsii_.RegisterStruct(
 		"cdk-pipelines-github.GitHubSecretsProviderProps",
 		reflect.TypeOf((*GitHubSecretsProviderProps)(nil)).Elem(),
 	)

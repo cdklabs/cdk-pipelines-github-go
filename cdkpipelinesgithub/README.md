@@ -521,12 +521,16 @@ pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowP
 pipeline.AddStageWithGitHubOptions(awscdk.NewStage(this, jsii.String("Beta"), &StageProps{
 	Env: *bETA_ENV,
 }), &AddGitHubStageOptions{
-	GitHubEnvironment: jsii.String("beta"),
+	GitHubEnvironment: &GitHubEnvironment{
+		Name: jsii.String("beta"),
+	},
 })
 pipeline.AddStageWithGitHubOptions(NewMyStage(this, jsii.String("Prod"), &StageProps{
 	Env: *pROD_ENV,
 }), &AddGitHubStageOptions{
-	GitHubEnvironment: jsii.String("prod"),
+	GitHubEnvironment: &GitHubEnvironment{
+		Name: jsii.String("prod"),
+	},
 })
 
 app.Synth()

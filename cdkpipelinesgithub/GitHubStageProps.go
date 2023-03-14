@@ -55,7 +55,7 @@ type GitHubStageProps struct {
 	// See: https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
 	//
 	// Experimental.
-	GitHubEnvironment *string `field:"optional" json:"gitHubEnvironment" yaml:"gitHubEnvironment"`
+	GitHubEnvironment *GitHubEnvironment `field:"optional" json:"gitHubEnvironment" yaml:"gitHubEnvironment"`
 	// Job level settings that will be applied to all jobs in the stage.
 	//
 	// Currently the only valid setting is 'if'.
