@@ -1,3 +1,4 @@
+// GitHub Workflows support for CDK Pipelines
 package cdkpipelinesgithub
 
 import (
