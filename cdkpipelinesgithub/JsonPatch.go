@@ -34,7 +34,7 @@ type jsiiProxy_JsonPatch struct {
 // used instead of an index to insert at the end of an array.
 //
 // Example:
-//   src.JsonPatch_Add(jsii.String("/biscuits/1"), map[string]*string{
+//   cdkpipelinesgithub.JsonPatch_Add(jsii.String("/biscuits/1"), map[string]*string{
 //   	"name": jsii.String("Ginger Nut"),
 //   })
 //
@@ -90,7 +90,7 @@ func JsonPatch_Apply(document interface{}, ops ...JsonPatch) interface{} {
 // from and path are JSON Pointers.
 //
 // Example:
-//   src.JsonPatch_Copy(jsii.String("/biscuits/0"), jsii.String("/best_biscuit"))
+//   cdkpipelinesgithub.JsonPatch_Copy(jsii.String("/biscuits/0"), jsii.String("/best_biscuit"))
 //
 // Experimental.
 func JsonPatch_Copy(from *string, path *string) JsonPatch {
@@ -116,7 +116,7 @@ func JsonPatch_Copy(from *string, path *string) JsonPatch {
 // Both from and path are JSON Pointers.
 //
 // Example:
-//   src.JsonPatch_Move(jsii.String("/biscuits"), jsii.String("/cookies"))
+//   cdkpipelinesgithub.JsonPatch_Move(jsii.String("/biscuits"), jsii.String("/cookies"))
 //
 // Experimental.
 func JsonPatch_Move(from *string, path *string) JsonPatch {
@@ -140,7 +140,7 @@ func JsonPatch_Move(from *string, path *string) JsonPatch {
 // Removes a value from an object or array.
 //
 // Example:
-//   src.JsonPatch_Remove(jsii.String("/biscuits/0"))
+//   cdkpipelinesgithub.JsonPatch_Remove(jsii.String("/biscuits/0"))
 //
 // Experimental.
 func JsonPatch_Remove(path *string) JsonPatch {
@@ -166,7 +166,7 @@ func JsonPatch_Remove(path *string) JsonPatch {
 // Equivalent to a “remove” followed by an “add”.
 //
 // Example:
-//   src.JsonPatch_Replace(jsii.String("/biscuits/0/name"), jsii.String("Chocolate Digestive"))
+//   cdkpipelinesgithub.JsonPatch_Replace(jsii.String("/biscuits/0/name"), jsii.String("Chocolate Digestive"))
 //
 // Experimental.
 func JsonPatch_Replace(path *string, value interface{}) JsonPatch {
@@ -193,7 +193,7 @@ func JsonPatch_Replace(path *string, value interface{}) JsonPatch {
 // then the patch as a whole should not apply.
 //
 // Example:
-//   src.JsonPatch_Test(jsii.String("/best_biscuit/name"), jsii.String("Choco Leibniz"))
+//   cdkpipelinesgithub.JsonPatch_Test(jsii.String("/best_biscuit/name"), jsii.String("Choco Leibniz"))
 //
 // Experimental.
 func JsonPatch_Test(path *string, value interface{}) JsonPatch {

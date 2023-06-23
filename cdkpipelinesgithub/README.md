@@ -68,14 +68,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
 		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
 	}),
 })
@@ -180,14 +180,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
 		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
 		RoleSessionName: jsii.String("optional-role-session-name"),
 	}),
@@ -218,7 +218,7 @@ func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGit
 	this := &myGitHubActionRole{}
 	newStack_Override(this, scope, id, props)
 
-	provider := src.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
+	provider := cdkpipelinesgithub.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
 		Repos: []*string{
 			jsii.String("myUser/myRepo"),
 		},
@@ -248,11 +248,11 @@ func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGit
 	this := &myGitHubActionRole{}
 	newStack_Override(this, scope, id, props)
 
-	provider := src.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
+	provider := cdkpipelinesgithub.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
 		Repos: []*string{
 			jsii.String("myUser/myRepo"),
 		},
-		Provider: *src.GitHubActionRole_ExistingGitHubActionsProvider(this),
+		Provider: *cdkpipelinesgithub.GitHubActionRole_ExistingGitHubActionsProvider(this),
 	})
 	return this
 }
@@ -272,14 +272,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	AwsCreds: *src.AwsCredentials_FromGitHubSecrets(&GitHubSecretsProviderProps{
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_FromGitHubSecrets(&GitHubSecretsProviderProps{
 		AccessKeyId: jsii.String("MY_ID"),
 		 // GitHub will look for the access key id under the secret `MY_ID`
 		SecretAccessKey: jsii.String("MY_KEY"),
@@ -298,14 +298,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	AwsCreds: *src.AwsCredentials_RunnerHasPreconfiguredCreds(),
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_RunnerHasPreconfiguredCreds(),
 })
 ```
 
@@ -332,7 +332,7 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
@@ -340,13 +340,13 @@ pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowP
 		},
 	}),
 	DockerCredentials: []dockerCredential{
-		*src.DockerCredential_Ecr(jsii.String("<account-id>.dkr.ecr.<aws-region>.amazonaws.com")),
-		*src.DockerCredential_DockerHub(&DockerHubCredentialSecrets{
+		*cdkpipelinesgithub.DockerCredential_Ecr(jsii.String("<account-id>.dkr.ecr.<aws-region>.amazonaws.com")),
+		*cdkpipelinesgithub.DockerCredential_DockerHub(&DockerHubCredentialSecrets{
 			// These properties are defaults; feel free to omit
 			UsernameKey: jsii.String("DOCKERHUB_USERNAME"),
 			PersonalAccessTokenKey: jsii.String("DOCKERHUB_TOKEN"),
 		}),
-		*src.DockerCredential_CustomRegistry(jsii.String("custom-registry"), &ExternalDockerCredentialSecrets{
+		*cdkpipelinesgithub.DockerCredential_CustomRegistry(jsii.String("custom-registry"), &ExternalDockerCredentialSecrets{
 			UsernameKey: jsii.String("CUSTOM_USERNAME"),
 			PasswordKey: jsii.String("CUSTOM_PASSWORD"),
 		}),
@@ -368,14 +368,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	Runner: *src.Runner_WINDOWS_LATEST(),
+	Runner: *cdkpipelinesgithub.Runner_WINDOWS_LATEST(),
 })
 ```
 
@@ -389,14 +389,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	Runner: *src.Runner_SelfHosted([]*string{
+	Runner: *cdkpipelinesgithub.Runner_SelfHosted([]*string{
 		jsii.String("label1"),
 		jsii.String("label2"),
 	}),
@@ -413,7 +413,7 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
@@ -424,10 +424,10 @@ pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowP
 
 deployWorkflow := pipeline.WorkflowFile
 // add `on: workflow_call: {}` to deploy.yml
-deployWorkflow.Patch(src.JsonPatch_Add(jsii.String("/on/workflow_call"), map[string]interface{}{
+deployWorkflow.Patch(cdkpipelinesgithub.JsonPatch_Add(jsii.String("/on/workflow_call"), map[string]interface{}{
 }))
 // remove `on: workflow_dispatch` from deploy.yml
-deployWorkflow.Patch(src.JsonPatch_Remove(jsii.String("/on/workflow_dispatch")))
+deployWorkflow.Patch(cdkpipelinesgithub.JsonPatch_Remove(jsii.String("/on/workflow_dispatch")))
 ```
 
 ## Additional Features
@@ -449,7 +449,7 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
@@ -464,7 +464,7 @@ stage := NewMyStage(app, jsii.String("Beta"), &StageProps{
 })
 pipeline.AddStage(stage, &AddStageOpts{
 	Pre: []step{
-		*src.NewGitHubActionStep(jsii.String("PreBetaDeployAction"), &GitHubActionStepProps{
+		*cdkpipelinesgithub.NewGitHubActionStep(jsii.String("PreBetaDeployAction"), &GitHubActionStepProps{
 			JobSteps: []jobStep{
 				&jobStep{
 					Name: jsii.String("Checkout"),
@@ -506,14 +506,14 @@ import "github.com/aws/aws-cdk-go/awscdk"
 
 app := awscdk.NewApp()
 
-pipeline := src.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 		Commands: []*string{
 			jsii.String("yarn install"),
 			jsii.String("yarn build"),
 		},
 	}),
-	AwsCreds: *src.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
 		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
 	}),
 })
@@ -670,7 +670,7 @@ synthesized against.
 > ```go
 > import "github.com/aws/aws-cdk-go/awscdk"
 >
-> pipeline := src.NewGitHubWorkflow(awscdk.NewApp(), jsii.String("Pipeline"), &GitHubWorkflowProps{
+> pipeline := cdkpipelinesgithub.NewGitHubWorkflow(awscdk.NewApp(), jsii.String("Pipeline"), &GitHubWorkflowProps{
 > 	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
 > 		Commands: []*string{
 > 			jsii.String("echo \"nothing to do (cdk.out is committed)\""),
