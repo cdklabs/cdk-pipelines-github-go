@@ -24,5 +24,13 @@ type GitHubActionRoleProps struct {
 	// The name of the Oidc role.
 	// Experimental.
 	RoleName *string `field:"optional" json:"roleName" yaml:"roleName"`
+	// Thumbprints of GitHub's certificates.
+	//
+	// Every time GitHub rotates their certificates, this value will need to be updated.
+	//
+	// Default value is up-to-date to June 27, 2023 as per
+	// https://github.blog/changelog/2023-06-27-github-actions-update-on-oidc-integration-with-aws/
+	// Experimental.
+	Thumbprints *[]*string `field:"optional" json:"thumbprints" yaml:"thumbprints"`
 }
 
