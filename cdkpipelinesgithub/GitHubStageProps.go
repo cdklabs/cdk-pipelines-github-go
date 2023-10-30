@@ -32,6 +32,8 @@ type GitHubStageProps struct {
 	//     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 	//   });
 	//
+	// Default: - The environments should be configured on the `Stack`s.
+	//
 	// Experimental.
 	Env *awscdk.Environment `field:"optional" json:"env" yaml:"env"`
 	// The output directory into which to emit synthesized artifacts.
@@ -39,6 +41,10 @@ type GitHubStageProps struct {
 	// Can only be specified if this stage is the root stage (the app). If this is
 	// specified and this stage is nested within another stage, an error will be
 	// thrown.
+	// Default: - for nested stages, outdir will be determined as a relative
+	// directory to the outdir of the app. For apps, if outdir is not specified, a
+	// temporary directory will be created.
+	//
 	// Experimental.
 	Outdir *string `field:"optional" json:"outdir" yaml:"outdir"`
 	// Run the stage in a specific GitHub Environment.
@@ -53,6 +59,8 @@ type GitHubStageProps struct {
 	// exist will create an environment with the referenced name.
 	// See: https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
 	//
+	// Default: - no GitHub environment.
+	//
 	// Experimental.
 	GitHubEnvironment *GitHubEnvironment `field:"optional" json:"gitHubEnvironment" yaml:"gitHubEnvironment"`
 	// Job level settings that will be applied to all jobs in the stage.
@@ -64,6 +72,8 @@ type GitHubStageProps struct {
 	//
 	// If insufficiently specified, CloudFormation returns an `InsufficientCapabilities`
 	// error.
+	// Default: ['CAPABILITY_IAM'].
+	//
 	// Experimental.
 	StackCapabilities *[]StackCapabilities `field:"optional" json:"stackCapabilities" yaml:"stackCapabilities"`
 }

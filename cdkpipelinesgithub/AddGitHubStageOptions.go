@@ -8,12 +8,18 @@ import (
 // Experimental.
 type AddGitHubStageOptions struct {
 	// Additional steps to run after all of the stacks in the stage.
+	// Default: - No additional steps.
+	//
 	// Experimental.
 	Post *[]pipelines.Step `field:"optional" json:"post" yaml:"post"`
 	// Additional steps to run before any of the stacks in the stage.
+	// Default: - No additional steps.
+	//
 	// Experimental.
 	Pre *[]pipelines.Step `field:"optional" json:"pre" yaml:"pre"`
 	// Instructions for stack level steps.
+	// Default: - No additional instructions.
+	//
 	// Experimental.
 	StackSteps *[]*pipelines.StackSteps `field:"optional" json:"stackSteps" yaml:"stackSteps"`
 	// Run the stage in a specific GitHub Environment.
@@ -28,6 +34,8 @@ type AddGitHubStageOptions struct {
 	// exist will create an environment with the referenced name.
 	// See: https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
 	//
+	// Default: - no GitHub environment.
+	//
 	// Experimental.
 	GitHubEnvironment *GitHubEnvironment `field:"optional" json:"gitHubEnvironment" yaml:"gitHubEnvironment"`
 	// Job level settings that will be applied to all jobs in the stage.
@@ -39,6 +47,8 @@ type AddGitHubStageOptions struct {
 	//
 	// If insufficiently specified, CloudFormation returns an `InsufficientCapabilities`
 	// error.
+	// Default: ['CAPABILITY_IAM'].
+	//
 	// Experimental.
 	StackCapabilities *[]StackCapabilities `field:"optional" json:"stackCapabilities" yaml:"stackCapabilities"`
 }

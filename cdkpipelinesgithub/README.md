@@ -231,6 +231,34 @@ NewMyGitHubActionRole(app, jsii.String("MyGitHubActionRole"))
 app.Synth()
 ```
 
+Specifying a `repos` array grants GitHub full access to the specified repositories.
+To restrict access to specific git branch, tag, or other
+[GitHub OIDC subject claim](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims),
+specify a `subjectClaims` array instead of a `repos` array.
+
+```go
+type myGitHubActionRole struct {
+	stack
+}
+
+func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+	this := &myGitHubActionRole{}
+	newStack_Override(this, scope, id, props)
+
+	provider := cdkpipelinesgithub.NewGitHubActionRole(this, jsii.String("github-action-role"), &GitHubActionRoleProps{
+		SubjectClaims: []*string{
+			jsii.String("repo:owner/repo1:ref:refs/heads/main"),
+			jsii.String("repo:owner/repo1:environment:prod"),
+		},
+	})
+	return this
+}
+
+app := awscdk.NewApp()
+NewMyGitHubActionRole(app, jsii.String("MyGitHubActionRole"))
+app.Synth()
+```
+
 Note: If you have previously created the GitHub identity provider with url
 `https://token.actions.githubusercontent.com`, the above example will fail
 because you can only have one such provider defined per account. In this

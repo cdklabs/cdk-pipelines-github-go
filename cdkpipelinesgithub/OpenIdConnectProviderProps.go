@@ -12,6 +12,8 @@ type OpenIdConnectProviderProps struct {
 	// Experimental.
 	GitHubActionRoleArn *string `field:"required" json:"gitHubActionRoleArn" yaml:"gitHubActionRoleArn"`
 	// The role session name to use when assuming the role.
+	// Default: - no role session name.
+	//
 	// Experimental.
 	RoleSessionName *string `field:"optional" json:"roleSessionName" yaml:"roleSessionName"`
 }

@@ -17,15 +17,23 @@ type GitHubWorkflowProps struct {
 	// Experimental.
 	Synth pipelines.IFileSetProducer `field:"required" json:"synth" yaml:"synth"`
 	// Names of GitHub repository secrets that include AWS credentials for deployment.
+	// Default: - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+	//
 	// Deprecated: Use `awsCreds.fromGitHubSecrets()` instead.
 	AwsCredentials *AwsCredentialsSecrets `field:"optional" json:"awsCredentials" yaml:"awsCredentials"`
 	// Configure provider for AWS credentials used for deployment.
+	// Default: - Get AWS credentials from GitHub secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+	//
 	// Experimental.
 	AwsCreds AwsCredentialsProvider `field:"optional" json:"awsCreds" yaml:"awsCreds"`
 	// Build container options.
+	// Default: - GitHub defaults.
+	//
 	// Experimental.
 	BuildContainer *ContainerOptions `field:"optional" json:"buildContainer" yaml:"buildContainer"`
 	// Version of the CDK CLI to use.
+	// Default: - automatic.
+	//
 	// Experimental.
 	CdkCliVersion *string `field:"optional" json:"cdkCliVersion" yaml:"cdkCliVersion"`
 	// The Docker Credentials to use to login.
@@ -41,6 +49,8 @@ type GitHubWorkflowProps struct {
 	// You can create your own role in the console with the necessary trust policy
 	// to allow gitHub actions from your gitHub repository to assume the role, or
 	// you can utilize the `GitHubActionRole` construct to create a role for you.
+	// Default: - GitHub repository secrets are used instead of OpenId Connect role.
+	//
 	// Deprecated: Use `awsCreds.fromOpenIdConnect()` instead.
 	GitHubActionRoleArn *string `field:"optional" json:"gitHubActionRoleArn" yaml:"gitHubActionRoleArn"`
 	// Job level settings that will be applied to all jobs in the workflow, including synth and asset deploy jobs.
@@ -52,12 +62,18 @@ type GitHubWorkflowProps struct {
 	// Experimental.
 	JobSettings *JobSettings `field:"optional" json:"jobSettings" yaml:"jobSettings"`
 	// GitHub workflow steps to execute after build.
+	// Default: [].
+	//
 	// Experimental.
 	PostBuildSteps *[]*JobStep `field:"optional" json:"postBuildSteps" yaml:"postBuildSteps"`
 	// GitHub workflow steps to execute before build.
+	// Default: [].
+	//
 	// Experimental.
 	PreBuildSteps *[]*JobStep `field:"optional" json:"preBuildSteps" yaml:"preBuildSteps"`
 	// Indicates if the repository already contains a synthesized `cdk.out` directory, in which case we will simply checkout the repo in jobs that require `cdk.out`.
+	// Default: false.
+	//
 	// Experimental.
 	PreSynthed *bool `field:"optional" json:"preSynthed" yaml:"preSynthed"`
 	// Will assume the GitHubActionRole in this region when publishing assets.
@@ -66,21 +82,32 @@ type GitHubWorkflowProps struct {
 	//
 	// In most cases, you do not have to worry about this property, and can safely
 	// ignore it.
+	// Default: "us-west-2".
+	//
 	// Experimental.
 	PublishAssetsAuthRegion *string `field:"optional" json:"publishAssetsAuthRegion" yaml:"publishAssetsAuthRegion"`
 	// The type of runner to run the job on.
 	//
 	// The runner can be either a
 	// GitHub-hosted runner or a self-hosted runner.
+	// Default: Runner.UBUNTU_LATEST
+	//
 	// Experimental.
 	Runner Runner `field:"optional" json:"runner" yaml:"runner"`
 	// Name of the workflow.
+	// Default: "deploy".
+	//
 	// Experimental.
 	WorkflowName *string `field:"optional" json:"workflowName" yaml:"workflowName"`
 	// File path for the GitHub workflow.
+	// Default: ".github/workflows/deploy.yml"
+	//
 	// Experimental.
 	WorkflowPath *string `field:"optional" json:"workflowPath" yaml:"workflowPath"`
 	// GitHub workflow triggers.
+	// Default: - By default, workflow is triggered on push to the `main` branch
+	// and can also be triggered manually (`workflow_dispatch`).
+	//
 	// Experimental.
 	WorkflowTriggers *WorkflowTriggers `field:"optional" json:"workflowTriggers" yaml:"workflowTriggers"`
 }

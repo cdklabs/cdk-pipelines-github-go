@@ -116,6 +116,8 @@ type Job struct {
 	// Experimental.
 	Strategy *JobStrategy `field:"optional" json:"strategy" yaml:"strategy"`
 	// The maximum number of minutes to let a job run before GitHub automatically cancels it.
+	// Default: 360.
+	//
 	// Experimental.
 	TimeoutMinutes *float64 `field:"optional" json:"timeoutMinutes" yaml:"timeoutMinutes"`
 }
