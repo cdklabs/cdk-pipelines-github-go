@@ -39,10 +39,10 @@ type YamlFile interface {
 	// ```yaml
 	// name: deploy
 	// on:
-	//    push:
-	//      branches:
-	//        - main
-	//    workflow_dispatch: {}
+	//   push:
+	//     branches:
+	//       - main
+	//   workflow_dispatch: {}
 	// ...
 	// ```
 	//
@@ -59,10 +59,10 @@ type YamlFile interface {
 	// ```yaml
 	// name: deploy
 	// on:
-	//    push:
-	//      branches:
-	//        - main
-	//    workflow_call: {}
+	//   push:
+	//     branches:
+	//       - main
+	//   workflow_call: {}
 	// ...
 	// ```.
 	// Experimental.

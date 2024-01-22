@@ -50,6 +50,7 @@ Workflows.
       * [Waves for Parallel Builds](#waves-for-parallel-builds)
       * [Manual Approval Step](#manual-approval-step)
     * [Pipeline YAML Comments](#pipeline-yaml-comments)
+    * [Common Configuration for Docker Asset Publishing Steps](#common-configuration-for-docker-asset-publishing)
   * [Tutorial](#tutorial)
   * [Not supported yet](#not-supported-yet)
   * [Contributing](#contributing)
@@ -634,6 +635,55 @@ on:
   push:
     branches:
 < the rest of the pipeline YAML contents>
+```
+
+### Common Configuration for Docker Asset Publishing Steps
+
+You can provide common job configuration for all of the docker asset publishing
+jobs using the `dockerAssetJobSettings` property. You can use this to:
+
+* Set additional `permissions` at the job level
+* Run additional steps prior to the docker build/push step
+
+Below is an example of example of configuration an additional `permission` which
+allows the job to authenticate against GitHub packages. It also shows
+configuration additional `setupSteps`, in this case setup steps to configure
+docker `buildx` and `QEMU` to enable building images for arm64 architecture.
+
+```go
+import "github.com/aws/aws-cdk-go/awscdk"
+
+
+app := awscdk.NewApp()
+
+pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &GitHubWorkflowProps{
+	Synth: awscdk.NewShellStep(jsii.String("Build"), &ShellStepProps{
+		Commands: []*string{
+			jsii.String("yarn install"),
+			jsii.String("yarn build"),
+		},
+	}),
+	DockerAssetJobSettings: &DockerAssetJobSettings{
+		Permissions: &JobPermissions{
+			Packages: *cdkpipelinesgithub.JobPermission_READ,
+		},
+		SetupSteps: []jobStep{
+			&jobStep{
+				Name: jsii.String("Setup Docker QEMU"),
+				Uses: jsii.String("docker/setup-qemu-action@v3"),
+			},
+			&jobStep{
+				Name: jsii.String("Setup Docker buildx"),
+				Uses: jsii.String("docker/setup-buildx-action@v3"),
+			},
+		},
+	},
+	AwsCreds: *cdkpipelinesgithub.AwsCredentials_FromOpenIdConnect(&OpenIdConnectProviderProps{
+		GitHubActionRoleArn: jsii.String("arn:aws:iam::<account-id>:role/GitHubActionRole"),
+	}),
+})
+
+app.Synth()
 ```
 
 ## Tutorial

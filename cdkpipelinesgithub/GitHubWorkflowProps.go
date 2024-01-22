@@ -36,6 +36,11 @@ type GitHubWorkflowProps struct {
 	//
 	// Experimental.
 	CdkCliVersion *string `field:"optional" json:"cdkCliVersion" yaml:"cdkCliVersion"`
+	// Job level settings applied to all docker asset publishing jobs in the workflow.
+	// Default: - no additional settings.
+	//
+	// Experimental.
+	DockerAssetJobSettings *DockerAssetJobSettings `field:"optional" json:"dockerAssetJobSettings" yaml:"dockerAssetJobSettings"`
 	// The Docker Credentials to use to login.
 	//
 	// If you set this variable,

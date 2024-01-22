@@ -14,9 +14,9 @@ import (
 // `JsonPatch.remove()`, etc.
 //
 // const output = JsonPatch.apply(input,
-//    JsonPatch.replace('/world/hi/there', 'goodbye'),
-//    JsonPatch.add('/world/foo/', 'boom'),
-//    JsonPatch.remove('/hello'),
+//   JsonPatch.replace('/world/hi/there', 'goodbye'),
+//   JsonPatch.add('/world/foo/', 'boom'),
+//   JsonPatch.remove('/hello'),
 // );.
 // Experimental.
 type JsonPatch interface {

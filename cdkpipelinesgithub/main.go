@@ -71,6 +71,10 @@ func init() {
 		"cdk-pipelines-github.DeploymentStatusOptions",
 		reflect.TypeOf((*DeploymentStatusOptions)(nil)).Elem(),
 	)
+	_jsii_.RegisterStruct(
+		"cdk-pipelines-github.DockerAssetJobSettings",
+		reflect.TypeOf((*DockerAssetJobSettings)(nil)).Elem(),
+	)
 	_jsii_.RegisterClass(
 		"cdk-pipelines-github.DockerCredential",
 		reflect.TypeOf((*DockerCredential)(nil)).Elem(),
