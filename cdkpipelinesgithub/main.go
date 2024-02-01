@@ -80,9 +80,9 @@ func init() {
 		reflect.TypeOf((*DockerCredential)(nil)).Elem(),
 		[]_jsii_.Member{
 			_jsii_.MemberProperty{JsiiProperty: "name", GoGetter: "Name"},
-			_jsii_.MemberProperty{JsiiProperty: "passwordKey", GoGetter: "PasswordKey"},
+			_jsii_.MemberProperty{JsiiProperty: "password", GoGetter: "Password"},
 			_jsii_.MemberProperty{JsiiProperty: "registry", GoGetter: "Registry"},
-			_jsii_.MemberProperty{JsiiProperty: "usernameKey", GoGetter: "UsernameKey"},
+			_jsii_.MemberProperty{JsiiProperty: "username", GoGetter: "Username"},
 		},
 		func() interface{} {
 			return &jsiiProxy_DockerCredential{}

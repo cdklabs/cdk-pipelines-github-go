@@ -370,6 +370,7 @@ pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &
 	}),
 	DockerCredentials: []dockerCredential{
 		*cdkpipelinesgithub.DockerCredential_Ecr(jsii.String("<account-id>.dkr.ecr.<aws-region>.amazonaws.com")),
+		*cdkpipelinesgithub.DockerCredential_Ghcr(),
 		*cdkpipelinesgithub.DockerCredential_DockerHub(&DockerHubCredentialSecrets{
 			// These properties are defaults; feel free to omit
 			UsernameKey: jsii.String("DOCKERHUB_USERNAME"),

@@ -15,11 +15,11 @@ type DockerCredential interface {
 	// Experimental.
 	Name() *string
 	// Experimental.
-	PasswordKey() *string
+	Password() *string
 	// Experimental.
 	Registry() *string
 	// Experimental.
-	UsernameKey() *string
+	Username() *string
 }
 
 // The jsii proxy struct for DockerCredential
@@ -37,11 +37,11 @@ func (j *jsiiProxy_DockerCredential) Name() *string {
 	return returns
 }
 
-func (j *jsiiProxy_DockerCredential) PasswordKey() *string {
+func (j *jsiiProxy_DockerCredential) Password() *string {
 	var returns *string
 	_jsii_.Get(
 		j,
-		"passwordKey",
+		"password",
 		&returns,
 	)
 	return returns
@@ -57,11 +57,11 @@ func (j *jsiiProxy_DockerCredential) Registry() *string {
 	return returns
 }
 
-func (j *jsiiProxy_DockerCredential) UsernameKey() *string {
+func (j *jsiiProxy_DockerCredential) Username() *string {
 	var returns *string
 	_jsii_.Get(
 		j,
-		"usernameKey",
+		"username",
 		&returns,
 	)
 	return returns
@@ -146,6 +146,27 @@ func DockerCredential_Ecr(registry *string) DockerCredential {
 		"cdk-pipelines-github.DockerCredential",
 		"ecr",
 		[]interface{}{registry},
+		&returns,
+	)
+
+	return returns
+}
+
+// Create a credential for the GitHub Container Registry (GHCR).
+//
+// For more information on authenticating to GHCR,.
+// See: https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions
+//
+// Experimental.
+func DockerCredential_Ghcr() DockerCredential {
+	_init_.Initialize()
+
+	var returns DockerCredential
+
+	_jsii_.StaticInvoke(
+		"cdk-pipelines-github.DockerCredential",
+		"ghcr",
+		nil, // no parameters
 		&returns,
 	)
 
