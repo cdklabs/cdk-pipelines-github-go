@@ -35,6 +35,14 @@ type GitHubStage interface {
 	// *.
 	// Experimental.
 	ParentStage() awscdk.Stage
+	// Validation plugins to run during synthesis.
+	//
+	// If any plugin reports any violation,
+	// synthesis will be interrupted and the report displayed to the user.
+	// Default: - no validation plugins are used.
+	//
+	// Experimental.
+	PolicyValidationBeta1() *[]awscdk.IPolicyValidationPluginBeta1
 	// Experimental.
 	Props() *GitHubStageProps
 	// The default region for all resources defined within this stage.
@@ -117,6 +125,16 @@ func (j *jsiiProxy_GitHubStage) ParentStage() awscdk.Stage {
 	_jsii_.Get(
 		j,
 		"parentStage",
+		&returns,
+	)
+	return returns
+}
+
+func (j *jsiiProxy_GitHubStage) PolicyValidationBeta1() *[]awscdk.IPolicyValidationPluginBeta1 {
+	var returns *[]awscdk.IPolicyValidationPluginBeta1
+	_jsii_.Get(
+		j,
+		"policyValidationBeta1",
 		&returns,
 	)
 	return returns

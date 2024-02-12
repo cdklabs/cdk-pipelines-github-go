@@ -68,6 +68,14 @@ func validateGitHubWorkflow_IsConstructParameters(x interface{}) error {
 	return nil
 }
 
+func validateGitHubWorkflow_IsPipelineParameters(x interface{}) error {
+	if x == nil {
+		return fmt.Errorf("parameter x is required, but nil was provided")
+	}
+
+	return nil
+}
+
 func validateNewGitHubWorkflowParameters(scope constructs.Construct, id *string, props *GitHubWorkflowProps) error {
 	if scope == nil {
 		return fmt.Errorf("parameter scope is required, but nil was provided")

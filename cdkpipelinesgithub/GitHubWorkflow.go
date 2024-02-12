@@ -204,6 +204,28 @@ func GitHubWorkflow_IsConstruct(x interface{}) *bool {
 	return returns
 }
 
+// Return whether the given object extends `PipelineBase`.
+//
+// We do attribute detection since we can't reliably use 'instanceof'.
+// Experimental.
+func GitHubWorkflow_IsPipeline(x interface{}) *bool {
+	_init_.Initialize()
+
+	if err := validateGitHubWorkflow_IsPipelineParameters(x); err != nil {
+		panic(err)
+	}
+	var returns *bool
+
+	_jsii_.StaticInvoke(
+		"cdk-pipelines-github.GitHubWorkflow",
+		"isPipeline",
+		[]interface{}{x},
+		&returns,
+	)
+
+	return returns
+}
+
 func (g *jsiiProxy_GitHubWorkflow) AddGitHubWave(id *string, options *pipelines.WaveOptions) GitHubWave {
 	if err := g.validateAddGitHubWaveParameters(id, options); err != nil {
 		panic(err)

@@ -16,6 +16,10 @@ func (g *jsiiProxy_GitHubActionStep) validateConfigurePrimaryOutputParameters(fs
 	return nil
 }
 
+func (g *jsiiProxy_GitHubActionStep) validateDiscoverReferencedOutputsParameters(structure interface{}) error {
+	return nil
+}
+
 func validateGitHubActionStep_SequenceParameters(steps *[]pipelines.Step) error {
 	return nil
 }

@@ -47,6 +47,24 @@ type GitHubStageProps struct {
 	//
 	// Experimental.
 	Outdir *string `field:"optional" json:"outdir" yaml:"outdir"`
+	// Options for applying a permissions boundary to all IAM Roles and Users created within this Stage.
+	// Default: - no permissions boundary is applied.
+	//
+	// Experimental.
+	PermissionsBoundary awscdk.PermissionsBoundary `field:"optional" json:"permissionsBoundary" yaml:"permissionsBoundary"`
+	// Validation plugins to run during synthesis.
+	//
+	// If any plugin reports any violation,
+	// synthesis will be interrupted and the report displayed to the user.
+	// Default: - no validation plugins are used.
+	//
+	// Experimental.
+	PolicyValidationBeta1 *[]awscdk.IPolicyValidationPluginBeta1 `field:"optional" json:"policyValidationBeta1" yaml:"policyValidationBeta1"`
+	// Name of this stage.
+	// Default: - Derived from the id.
+	//
+	// Experimental.
+	StageName *string `field:"optional" json:"stageName" yaml:"stageName"`
 	// Run the stage in a specific GitHub Environment.
 	//
 	// If specified,

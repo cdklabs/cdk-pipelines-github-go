@@ -12,6 +12,9 @@ import (
 // Experimental.
 type GitHubActionStep interface {
 	pipelines.Step
+	// StackOutputReferences this step consumes.
+	// Experimental.
+	ConsumedStackOutputs() *[]pipelines.StackOutputReference
 	// Return the steps this step depends on, based on the FileSets it requires.
 	// Experimental.
 	Dependencies() *[]pipelines.Step
@@ -47,6 +50,14 @@ type GitHubActionStep interface {
 	// Configure the given FileSet as the primary output of this step.
 	// Experimental.
 	ConfigurePrimaryOutput(fs pipelines.FileSet)
+	// Crawl the given structure for references to StepOutputs and add dependencies on all steps found.
+	//
+	// Should be called in the constructor of subclasses based on what the user
+	// passes in as construction properties. The format of the structure passed in
+	// here does not have to correspond exactly to what gets rendered into the
+	// engine, it just needs to contain the same data.
+	// Experimental.
+	DiscoverReferencedOutputs(structure interface{})
 	// Return a string representation of this Step.
 	// Experimental.
 	ToString() *string
@@ -55,6 +66,16 @@ type GitHubActionStep interface {
 // The jsii proxy struct for GitHubActionStep
 type jsiiProxy_GitHubActionStep struct {
 	internal.Type__pipelinesStep
+}
+
+func (j *jsiiProxy_GitHubActionStep) ConsumedStackOutputs() *[]pipelines.StackOutputReference {
+	var returns *[]pipelines.StackOutputReference
+	_jsii_.Get(
+		j,
+		"consumedStackOutputs",
+		&returns,
+	)
+	return returns
 }
 
 func (j *jsiiProxy_GitHubActionStep) Dependencies() *[]pipelines.Step {
@@ -158,6 +179,10 @@ func NewGitHubActionStep_Override(g GitHubActionStep, id *string, props *GitHubA
 }
 
 // Define a sequence of steps to be executed in order.
+//
+// If you need more fine-grained step ordering, use the `addStepDependency()`
+// API. For example, if you want `secondStep` to occur after `firstStep`, call
+// `secondStep.addStepDependency(firstStep)`.
 // Experimental.
 func GitHubActionStep_Sequence(steps *[]pipelines.Step) *[]pipelines.Step {
 	_init_.Initialize()
@@ -207,6 +232,17 @@ func (g *jsiiProxy_GitHubActionStep) ConfigurePrimaryOutput(fs pipelines.FileSet
 		g,
 		"configurePrimaryOutput",
 		[]interface{}{fs},
+	)
+}
+
+func (g *jsiiProxy_GitHubActionStep) DiscoverReferencedOutputs(structure interface{}) {
+	if err := g.validateDiscoverReferencedOutputsParameters(structure); err != nil {
+		panic(err)
+	}
+	_jsii_.InvokeVoid(
+		g,
+		"discoverReferencedOutputs",
+		[]interface{}{structure},
 	)
 }
 

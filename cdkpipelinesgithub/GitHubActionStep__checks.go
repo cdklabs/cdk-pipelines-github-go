@@ -34,6 +34,14 @@ func (g *jsiiProxy_GitHubActionStep) validateConfigurePrimaryOutputParameters(fs
 	return nil
 }
 
+func (g *jsiiProxy_GitHubActionStep) validateDiscoverReferencedOutputsParameters(structure interface{}) error {
+	if structure == nil {
+		return fmt.Errorf("parameter structure is required, but nil was provided")
+	}
+
+	return nil
+}
+
 func validateGitHubActionStep_SequenceParameters(steps *[]pipelines.Step) error {
 	if steps == nil {
 		return fmt.Errorf("parameter steps is required, but nil was provided")

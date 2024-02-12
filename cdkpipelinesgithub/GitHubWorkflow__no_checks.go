@@ -24,6 +24,10 @@ func validateGitHubWorkflow_IsConstructParameters(x interface{}) error {
 	return nil
 }
 
+func validateGitHubWorkflow_IsPipelineParameters(x interface{}) error {
+	return nil
+}
+
 func validateNewGitHubWorkflowParameters(scope constructs.Construct, id *string, props *GitHubWorkflowProps) error {
 	return nil
 }
