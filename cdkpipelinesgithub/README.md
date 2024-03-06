@@ -498,7 +498,7 @@ pipeline.AddStage(stage, &AddStageOpts{
 			JobSteps: []jobStep{
 				&jobStep{
 					Name: jsii.String("Checkout"),
-					Uses: jsii.String("actions/checkout@v3"),
+					Uses: jsii.String("actions/checkout@v4"),
 				},
 				&jobStep{
 					Name: jsii.String("pre beta-deploy action"),
