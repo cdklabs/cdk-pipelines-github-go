@@ -44,6 +44,10 @@ func init() {
 		reflect.TypeOf((*CheckSuiteOptions)(nil)).Elem(),
 	)
 	_jsii_.RegisterStruct(
+		"cdk-pipelines-github.ConcurrencyOptions",
+		reflect.TypeOf((*ConcurrencyOptions)(nil)).Elem(),
+	)
+	_jsii_.RegisterStruct(
 		"cdk-pipelines-github.ContainerCredentials",
 		reflect.TypeOf((*ContainerCredentials)(nil)).Elem(),
 	)

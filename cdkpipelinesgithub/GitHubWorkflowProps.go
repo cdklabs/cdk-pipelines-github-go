@@ -36,6 +36,11 @@ type GitHubWorkflowProps struct {
 	//
 	// Experimental.
 	CdkCliVersion *string `field:"optional" json:"cdkCliVersion" yaml:"cdkCliVersion"`
+	// GitHub workflow concurrency.
+	// Default: - no concurrency settings.
+	//
+	// Experimental.
+	Concurrency *ConcurrencyOptions `field:"optional" json:"concurrency" yaml:"concurrency"`
 	// Job level settings applied to all docker asset publishing jobs in the workflow.
 	// Default: - no additional settings.
 	//
