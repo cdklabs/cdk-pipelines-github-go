@@ -13,7 +13,7 @@ import (
 	constructs "github.com/aws/constructs-go/constructs/v10/jsii"
 )
 
-//go:embed cdk-pipelines-github-0.4.119.tgz
+//go:embed cdk-pipelines-github-0.4.120.tgz
 var tarball []byte
 
 // Initialize loads the necessary packages in the @jsii/kernel to support the enclosing module.
@@ -24,5 +24,5 @@ func Initialize() {
 	constructs.Initialize()
 
 	// Load this library into the kernel
-	_jsii_.Load("cdk-pipelines-github", "0.4.119", tarball)
+	_jsii_.Load("cdk-pipelines-github", "0.4.120", tarball)
 }
