@@ -33,6 +33,8 @@ type GitHubActionStep interface {
 	IsSource() *bool
 	// Experimental.
 	JobSteps() *[]*JobStep
+	// Experimental.
+	Permissions() *JobPermissions
 	// The primary FileSet produced by this Step.
 	//
 	// Not all steps produce an output FileSet--if they do
@@ -133,6 +135,16 @@ func (j *jsiiProxy_GitHubActionStep) JobSteps() *[]*JobStep {
 	_jsii_.Get(
 		j,
 		"jobSteps",
+		&returns,
+	)
+	return returns
+}
+
+func (j *jsiiProxy_GitHubActionStep) Permissions() *JobPermissions {
+	var returns *JobPermissions
+	_jsii_.Get(
+		j,
+		"permissions",
 		&returns,
 	)
 	return returns

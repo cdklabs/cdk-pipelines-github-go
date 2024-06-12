@@ -473,6 +473,9 @@ If you want to call a GitHub Action in a step, you can utilize the `GitHubAction
 
 The `jobSteps` array is placed into the pipeline job at the relevant `jobs.<job_id>.steps` as [documented here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps).
 
+GitHub Actions Job permissions can be modified by passing the `permissions` object to `GitHubActionStep`.
+The default set of permissions is simply `contents: write`.
+
 In this example,
 
 ```go
@@ -497,6 +500,10 @@ stage := NewMyStage(app, jsii.String("Beta"), &StageProps{
 pipeline.AddStage(stage, &AddStageOpts{
 	Pre: []step{
 		*cdkpipelinesgithub.NewGitHubActionStep(jsii.String("PreBetaDeployAction"), &GitHubActionStepProps{
+			Permissions: &JobPermissions{
+				IdToken: *cdkpipelinesgithub.JobPermission_WRITE,
+				Contents: *cdkpipelinesgithub.JobPermission_WRITE,
+			},
 			JobSteps: []jobStep{
 				&jobStep{
 					Name: jsii.String("Checkout"),
