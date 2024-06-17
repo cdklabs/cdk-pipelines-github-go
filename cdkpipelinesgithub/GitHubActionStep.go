@@ -23,6 +23,8 @@ type GitHubActionStep interface {
 	DependencyFileSets() *[]pipelines.FileSet
 	// Experimental.
 	Env() *map[string]*string
+	// Experimental.
+	GithubEnvironment() *string
 	// Identifier for this step.
 	// Experimental.
 	Id() *string
@@ -105,6 +107,16 @@ func (j *jsiiProxy_GitHubActionStep) Env() *map[string]*string {
 	_jsii_.Get(
 		j,
 		"env",
+		&returns,
+	)
+	return returns
+}
+
+func (j *jsiiProxy_GitHubActionStep) GithubEnvironment() *string {
+	var returns *string
+	_jsii_.Get(
+		j,
+		"githubEnvironment",
 		&returns,
 	)
 	return returns

@@ -134,6 +134,7 @@ func init() {
 			_jsii_.MemberProperty{JsiiProperty: "dependencyFileSets", GoGetter: "DependencyFileSets"},
 			_jsii_.MemberMethod{JsiiMethod: "discoverReferencedOutputs", GoMethod: "DiscoverReferencedOutputs"},
 			_jsii_.MemberProperty{JsiiProperty: "env", GoGetter: "Env"},
+			_jsii_.MemberProperty{JsiiProperty: "githubEnvironment", GoGetter: "GithubEnvironment"},
 			_jsii_.MemberProperty{JsiiProperty: "id", GoGetter: "Id"},
 			_jsii_.MemberProperty{JsiiProperty: "isSource", GoGetter: "IsSource"},
 			_jsii_.MemberProperty{JsiiProperty: "jobSteps", GoGetter: "JobSteps"},
