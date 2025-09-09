@@ -31,11 +31,11 @@ type GitHubWorkflowProps struct {
 	//
 	// Experimental.
 	BuildContainer *ContainerOptions `field:"optional" json:"buildContainer" yaml:"buildContainer"`
-	// Version of the CDK CLI to use.
+	// Version of the [cdk-assets package](https://www.npmjs.com/package/cdk-assets) to use.
 	// Default: - automatic.
 	//
 	// Experimental.
-	CdkCliVersion *string `field:"optional" json:"cdkCliVersion" yaml:"cdkCliVersion"`
+	CdkAssetsVersion *string `field:"optional" json:"cdkAssetsVersion" yaml:"cdkAssetsVersion"`
 	// GitHub workflow concurrency.
 	// Default: - no concurrency settings.
 	//
