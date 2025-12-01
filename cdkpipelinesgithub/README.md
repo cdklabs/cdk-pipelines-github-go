@@ -214,10 +214,10 @@ and `cdk deploy`:
 
 ```go
 type myGitHubActionRole struct {
-	stack
+	Stack
 }
 
-func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+func newMyGitHubActionRole(scope Construct, id *string, props StackProps) *myGitHubActionRole {
 	this := &myGitHubActionRole{}
 	newStack_Override(this, scope, id, props)
 
@@ -241,10 +241,10 @@ specify a `subjectClaims` array instead of a `repos` array.
 
 ```go
 type myGitHubActionRole struct {
-	stack
+	Stack
 }
 
-func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+func newMyGitHubActionRole(scope Construct, id *string, props StackProps) *myGitHubActionRole {
 	this := &myGitHubActionRole{}
 	newStack_Override(this, scope, id, props)
 
@@ -272,10 +272,10 @@ construct via the `provider` property.
 
 ```go
 type myGitHubActionRole struct {
-	stack
+	Stack
 }
 
-func newMyGitHubActionRole(scope construct, id *string, props stackProps) *myGitHubActionRole {
+func newMyGitHubActionRole(scope Construct, id *string, props StackProps) *myGitHubActionRole {
 	this := &myGitHubActionRole{}
 	newStack_Override(this, scope, id, props)
 
@@ -370,7 +370,7 @@ pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &
 			jsii.String("yarn build"),
 		},
 	}),
-	DockerCredentials: []dockerCredential{
+	DockerCredentials: []DockerCredential{
 		*cdkpipelinesgithub.DockerCredential_Ecr(jsii.String("<account-id>.dkr.ecr.<aws-region>.amazonaws.com")),
 		*cdkpipelinesgithub.DockerCredential_Ghcr(),
 		*cdkpipelinesgithub.DockerCredential_DockerHub(&DockerHubCredentialSecrets{
@@ -498,22 +498,22 @@ stage := NewMyStage(app, jsii.String("Beta"), &StageProps{
 	Env: *bETA_ENV,
 })
 pipeline.AddStage(stage, &AddStageOpts{
-	Pre: []step{
+	Pre: []Step{
 		*cdkpipelinesgithub.NewGitHubActionStep(jsii.String("PreBetaDeployAction"), &GitHubActionStepProps{
 			Permissions: &JobPermissions{
 				IdToken: *cdkpipelinesgithub.JobPermission_WRITE,
 				Contents: *cdkpipelinesgithub.JobPermission_WRITE,
 			},
-			JobSteps: []jobStep{
-				&jobStep{
+			JobSteps: []JobStep{
+				&JobStep{
 					Name: jsii.String("Checkout"),
 					Uses: jsii.String("actions/checkout@v4"),
 				},
-				&jobStep{
+				&JobStep{
 					Name: jsii.String("pre beta-deploy action"),
 					Uses: jsii.String("my-pre-deploy-action@1.0.0"),
 				},
-				&jobStep{
+				&JobStep{
 					Name: jsii.String("pre beta-deploy check"),
 					Run: jsii.String("npm run preDeployCheck"),
 				},
@@ -677,12 +677,12 @@ pipeline := cdkpipelinesgithub.NewGitHubWorkflow(app, jsii.String("Pipeline"), &
 		Permissions: &JobPermissions{
 			Packages: *cdkpipelinesgithub.JobPermission_READ,
 		},
-		SetupSteps: []jobStep{
-			&jobStep{
+		SetupSteps: []JobStep{
+			&JobStep{
 				Name: jsii.String("Setup Docker QEMU"),
 				Uses: jsii.String("docker/setup-qemu-action@v3"),
 			},
-			&jobStep{
+			&JobStep{
 				Name: jsii.String("Setup Docker buildx"),
 				Uses: jsii.String("docker/setup-buildx-action@v3"),
 			},
